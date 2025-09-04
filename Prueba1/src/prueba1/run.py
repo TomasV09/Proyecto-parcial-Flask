@@ -1,11 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '123'
 
-@app.route('/')
-
-def eventos():
-    events = [
+events = [
     {
         'id': 1,
         'title': 'Conferencia de Python',
@@ -25,14 +23,16 @@ def eventos():
 
 categorias = ['Tecnologia','Academico','Cultural','Deportivo', 'Social']
 
-def mostrar_todo():
-    pass 
+@app.route('/')
+
+def index():
+    return render_template("index.html", events=events)
 
 #Ruta para mostrar un evento especifico
 @app.route('/event/<slug>/')
 
 def mostrar_evento(slug):
-    pass
+    return render_template("vista_evento.html", slug_title=slug)
 
 #Agregar asistente a un evento ya programado
 @app.route('/event/<slug>/register/')
